@@ -5,17 +5,80 @@ window.setup(1350,750)
 window.bgcolor("black")
 
 #Title Screen
-title = turtle.Turtle()
-title.pencolor("white")
-title.shape("square")
-title.shapesize(.1)
-title.speed(10)
-title.penup()
-title.write("TRON", font=("Germania One", 32), align=("center"))
-title.goto(-100,-100)
-title.write("Player 1, Tron, is Cyan and will control with q:left and e:right", font=("Germania One", 14))
-title.goto(-100,-200)
-title.write("Player 2, Clu, is Orange and will control with left-arrow:left and right-arrow:right", font=("Germania One", 14))
+def title_screen():
+    global title
+    global initialize_1
+    global initialize_2
+
+    title = turtle.Turtle()
+    title.pencolor("cyan")
+    title.shape("square")
+    title.shapesize(.1)
+    title.speed(0)
+    title.penup()
+    title.write("TRON", font=("Germania One", 32), align=("center"))
+    title.goto(-155,-15)
+    title.pencolor("white")
+    title.write("Player 1, Tron, is Cyan and will control with q:left and e:right", font=("Germania One", 9))
+    title.goto(-207,-30)
+    title.write("Player 2, Clu, is Orange and will control with left-arrow:left and right-arrow:right", font=("Germania One", 9))
+
+    initialize_1 = turtle.Turtle()
+    initialize_1.color("Cyan")
+    initialize_1.shape("square")
+    initialize_1.shapesize(.1)
+    initialize_1.speed(0)
+    initialize_1.penup()
+    initialize_1.hideturtle()
+
+    initialize_2 = turtle.Turtle()
+    initialize_2.color("Cyan")
+    initialize_2.shape("square")
+    initialize_2.shapesize(.1)
+    initialize_2.speed(0)
+    initialize_2.penup()
+    initialize_2.hideturtle()
+
+    y=0
+    initialize_1.forward(245)
+    initialize_1.stamp()
+    while (y <= 10):
+            initialize_1.forward(10)
+            initialize_1.stamp()
+            y += 1
+
+    x=0
+    y=0
+    while (x <= 90):
+        initialize_1.goto(0,0)
+        initialize_2.goto(0,0)
+        initialize_1.right(2)
+        initialize_2.left(2)
+        initialize_1.forward(245)
+        initialize_2.forward(245)
+        initialize_1.stamp()
+        initialize_2.stamp()
+        while (y <= 10):
+            initialize_1.forward(10)
+            initialize_2.forward(10)
+            initialize_1.stamp()
+            initialize_2.stamp()
+            y += 1
+        y = 0
+        x += 1
+    
+    title.goto(-57,-60)
+    title.write("Press Enter to Begin", font=("Germania One", 9))
+    window.onkey(title_cleanup, "Return")
+
+def title_cleanup():
+    title.hideturtle()
+    initialize_1.hideturtle()
+    initialize_2.hideturtle()
+    title.clear()
+    initialize_1.clear()
+    initialize_2.clear()
+    setup()
 
 def tron_right():
     global tron
@@ -42,6 +105,7 @@ def clu_right():
     clu.forward(1)
 
 def setup():
+
     global clu
     global tron
     global tron_xList
@@ -104,8 +168,8 @@ def movement():
     moving = True
 
     while moving != False:
-        tron.forward(1)
-        clu.forward(1)
+        tron.forward(5)
+        clu.forward(5)
 
         window.listen()
 
@@ -151,10 +215,10 @@ def bikecheck(x,y,bike):
                 end_game.hideturtle()
                 end_game.penup()
                 end_game.goto(-100,30)
-                end_game.color("red")
+                end_game.color("orange")
                 end_game.write("GAME OVER!", font=("Germania One",24),)
                 end_game.goto(-350,-20)
-                end_game.write("CONGRATUALTIONS TRON ON YOUR VICTORY!", font=("Germania One",24))
+                end_game.write("CONGRATUALTIONS CLU ON YOUR VICTORY!", font=("Germania One",24))
                 
     if bike == clu:
         for i in range(len(clu_xList)):
@@ -170,10 +234,10 @@ def bikecheck(x,y,bike):
                 end_game.hideturtle()
                 end_game.penup()
                 end_game.goto(-100,30)
-                end_game.color("red")
+                end_game.color("cyan")
                 end_game.write("GAME OVER!", font=("Germania One",24))
                 end_game.goto(-325,-20)
-                end_game.write("CONGRATUALTIONS CLU ON YOUR VICTORY!", font=("Germania One",24))
+                end_game.write("CONGRATUALTIONS TRON ON YOUR VICTORY!", font=("Germania One",24))
 
     tron_xList.append(x)
     tron_yList.append(y)
@@ -181,6 +245,6 @@ def bikecheck(x,y,bike):
     clu_xList.append(x)
     clu_yList.append(y)
 
-setup()
+title_screen()
 window.listen()
 window.mainloop()
